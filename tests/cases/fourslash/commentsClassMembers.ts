@@ -338,8 +338,7 @@ verify.memberListContains("nc_s3", "(property) c1.nc_s3: number", "");
 goTo.marker('31');
 verify.completionListContains("b", "(parameter) b: number", "number to add");
 
-goTo.marker('32');
-verify.quickInfoIs("(property) c1.s3: number", "static getter property\nsetter property");
+verify.quickInfoAt("32", "(property) c1.s3: number", "static getter property\nsetter property");
 
 goTo.marker('33');
 verify.completionListContains("c1", "class c1", "This is comment for c1");

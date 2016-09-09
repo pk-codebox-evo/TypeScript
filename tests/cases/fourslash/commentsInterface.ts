@@ -68,11 +68,8 @@
 ////i3_i.nc_/*44q*/f(/*44*/10);
 ////i3_i.nc/*45q*/_l(/*45*/10);
 
-goTo.marker('1');
-verify.quickInfoIs("interface i1", "this is interface 1");
-
-goTo.marker('2');
-verify.quickInfoIs("var i1_i: i1", "");
+verify.quickInfoAt("1", "interface i1", "this is interface 1");
+verify.quickInfoAt("2", "var i1_i: i1", "");
 
 goTo.marker('3');
 verify.quickInfoIs("interface nc_i1", "");
