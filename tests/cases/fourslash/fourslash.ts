@@ -136,6 +136,8 @@ declare namespace FourSlashInterface {
         isValidBraceCompletionAtPosition(openingBrace?: string): void;
     }
     class verify extends verifyNegatable {
+        //move
+        quickInquickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string): void;
         assertHasRanges(ranges: Range[]): void;
         caretAtMarker(markerName?: string): void;
         indentationIs(numberOfSpaces: number): void;

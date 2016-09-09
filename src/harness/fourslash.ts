@@ -954,6 +954,13 @@ namespace FourSlash {
             assert.equal(actual, expected);
         }
 
+        //move?
+        public verifyQuickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string) {
+            //clean up implementation: don't alter state
+            this.goToMarker(markerName);
+            this.verifyQuickInfoString(/*negative*/ false, expectedText, expectedDocumentation);
+        }
+
         public verifyQuickInfoString(negative: boolean, expectedText?: string, expectedDocumentation?: string) {
             const actualQuickInfo = this.languageService.getQuickInfoAtPosition(this.activeFile.fileName, this.currentCaretPosition);
             const actualQuickInfoText = actualQuickInfo ? ts.displayPartsToString(actualQuickInfo.displayParts) : "";
@@ -2989,6 +2996,11 @@ namespace FourSlashInterface {
     export class Verify extends VerifyNegatable {
         constructor(state: FourSlash.TestState) {
             super(state);
+        }
+
+        //move
+        public quickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string) {
+            this.state.verifyQuickInfoAt(markerName, expectedText, expectedDocumentation);
         }
 
         public caretAtMarker(markerName?: string) {

@@ -16,11 +16,9 @@ var C = 'C';
 var D = 'D'
 goTo.marker(B);
 edit.insert('constructor(val: T) { }');
-goTo.marker('Asig');
-verify.quickInfoIs("constructor A<string>(): A<string>");
+verify.quickInfoAt("Asig", "constructor A<string>(): A<string>");
 
-goTo.marker('Bsig');
-verify.quickInfoIs("constructor B<string>(val: string): B<string>");
+verify.quickInfoAt("Bsig", "constructor B<string>(val: string): B<string>");
 
 goTo.marker('Csig'); 
 verify.quickInfoIs("constructor C<string>(val: string): C<string>");
