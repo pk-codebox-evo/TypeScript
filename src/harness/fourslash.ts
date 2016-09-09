@@ -961,9 +961,15 @@ namespace FourSlash {
             this.verifyQuickInfoString(/*negative*/ false, expectedText, expectedDocumentation);
         }
 
-        public verifyQuickInfos(namesAndTexts: { [name: string]: string }) {
+        public verifyQuickInfos(namesAndTexts: { [name: string]: string | [string, string] }) {
             ts.forEachProperty(ts.createMap(namesAndTexts), (text, name) => {
-                this.verifyQuickInfoAt(name, text);
+                if (text instanceof Array) {
+                    const [expectedText, expectedDocumentation] = text;
+                    this.verifyQuickInfoAt(name, expectedText, expectedDocumentation);
+                }
+                else {
+                    this.verifyQuickInfoAt(name, text);
+                }
             });
         }
 

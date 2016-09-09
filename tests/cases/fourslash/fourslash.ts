@@ -138,7 +138,8 @@ declare namespace FourSlashInterface {
     class verify extends verifyNegatable {
         //move
         quickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string): void;
-        quickInfos(namesAndTexts: { [name: string]: string }): void;
+        //TODO:DOC
+        quickInfos(namesAndTexts: { [name: string]: string | [string, string] }): void;
 
         assertHasRanges(ranges: Range[]): void;
         caretAtMarker(markerName?: string): void;
