@@ -23,8 +23,6 @@ verify.memberListContains("foo");
 goTo.marker("insideFunctionExpression");
 verify.memberListContains("foo");
 
-goTo.marker("referenceInsideFunctionExpression");
-verify.quickInfoIs("(local function) foo(): number");
+verify.quickInfoAt("referenceInsideFunctionExpression", "(local function) foo(): number");
 
-goTo.marker("referenceInGlobalScope");
-verify.quickInfoIs("function foo(a: number): string");
+verify.quickInfoAt("referenceInGlobalScope", "function foo(a: number): string");

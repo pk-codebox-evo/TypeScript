@@ -10,11 +10,6 @@
 ////var c = new C();
 ////c.obj = <S>(/*3*/x) => x;
 
-goTo.marker('1');
-verify.quickInfoIs('(parameter) x: any');
-
-goTo.marker('2');
-verify.quickInfoIs('(parameter) x: any');
-
-goTo.marker('3');
-verify.quickInfoIs('(parameter) x: any');
+verify.quickInfoAt("1", "(parameter) x: any");
+verify.quickInfoAt("2", "(parameter) x: any");
+verify.quickInfoAt("3", "(parameter) x: any");

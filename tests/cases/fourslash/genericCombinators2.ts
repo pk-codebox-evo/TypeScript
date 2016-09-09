@@ -56,76 +56,46 @@
 ////
 ////var /*23*/r8a = _.map<number, /*error1*/B/*error2*/, string>(c5, (/*8a*/x,/*8b*/y) => { return y.foo() }); 
 
-goTo.marker('2a');
-verify.quickInfoIs('(parameter) x: Collection<number, number>');
-goTo.marker('2b');
-verify.quickInfoIs('(parameter) y: string');
+verify.quickInfoAt("2a", "(parameter) x: Collection<number, number>");
+verify.quickInfoAt("2b", "(parameter) y: string");
+verify.quickInfoAt("3a", "(parameter) x: number");
+verify.quickInfoAt("3b", "(parameter) y: A");
+verify.quickInfoAt("4a", "(parameter) x: number");
+verify.quickInfoAt("4b", "(parameter) y: B<any>");
 
-goTo.marker('3a');
-verify.quickInfoIs('(parameter) x: number');
-goTo.marker('3b');
-verify.quickInfoIs('(parameter) y: A');
+verify.quickInfoAt("5a", "(parameter) x: number");
+verify.quickInfoAt("5b", "(parameter) y: string");
 
-goTo.marker('4a');
-verify.quickInfoIs('(parameter) x: number');
-goTo.marker('4b');
-verify.quickInfoIs('(parameter) y: B<any>');
+verify.quickInfoAt("6a", "(parameter) x: Collection<number, number>");
+verify.quickInfoAt("6b", "(parameter) y: string");
 
-goTo.marker('5a');
-verify.quickInfoIs('(parameter) x: number');
-goTo.marker('5b');
-verify.quickInfoIs('(parameter) y: string');
+verify.quickInfoAt("7a", "(parameter) x: number");
+verify.quickInfoAt("7b", "(parameter) y: A");
 
-goTo.marker('6a');
-verify.quickInfoIs('(parameter) x: Collection<number, number>');
-goTo.marker('6b');
-verify.quickInfoIs('(parameter) y: string');
+verify.quickInfoAt("8a", "(parameter) x: number");
+verify.quickInfoAt("8b", "(parameter) y: any"); // Specialized to any because no type argument was specified
 
-goTo.marker('7a');
-verify.quickInfoIs('(parameter) x: number');
-goTo.marker('7b');
-verify.quickInfoIs('(parameter) y: A');
+verify.quickInfoAt("9", "var r1a: Collection<number, string>");
+verify.quickInfoAt("10", "var r1b: Collection<number, string>");
+verify.quickInfoAt("11", "var r2a: Collection<Collection<number, number>, number>");
+verify.quickInfoAt("12", "var r2b: Collection<Collection<number, number>, number>");
+verify.quickInfoAt("13", "var r3a: Collection<number, {}>");
+verify.quickInfoAt("14", "var r3b: Collection<number, {}>");
+verify.quickInfoAt("15", "var r4a: Collection<number, any>");
 
-goTo.marker('8a');
-verify.quickInfoIs('(parameter) x: number');
-goTo.marker('8b');
-verify.quickInfoIs('(parameter) y: any'); // Specialized to any because no type argument was specified
+verify.quickInfoAt("17", "var r5a: Collection<number, Date>");
 
-goTo.marker('9');
-verify.quickInfoIs('var r1a: Collection<number, string>');
-goTo.marker('10');
-verify.quickInfoIs('var r1b: Collection<number, string>');
-goTo.marker('11');
-verify.quickInfoIs('var r2a: Collection<Collection<number, number>, number>');
-goTo.marker('12');
-verify.quickInfoIs('var r2b: Collection<Collection<number, number>, number>');
-goTo.marker('13');
-verify.quickInfoIs('var r3a: Collection<number, {}>');
-goTo.marker('14');
-verify.quickInfoIs('var r3b: Collection<number, {}>');
-goTo.marker('15');
-verify.quickInfoIs('var r4a: Collection<number, any>');
+verify.quickInfoAt("18", "var r5b: Collection<number, Date>");
 
-goTo.marker('17');
-verify.quickInfoIs('var r5a: Collection<number, Date>');
+verify.quickInfoAt("19", "var r6a: Collection<Collection<number, number>, Date>");
 
-goTo.marker('18');
-verify.quickInfoIs('var r5b: Collection<number, Date>');
+verify.quickInfoAt("20", "var r6b: Collection<Collection<number, number>, Date>");
 
-goTo.marker('19');
-verify.quickInfoIs('var r6a: Collection<Collection<number, number>, Date>');
+verify.quickInfoAt("21", "var r7a: Collection<number, string>");
 
-goTo.marker('20');
-verify.quickInfoIs('var r6b: Collection<Collection<number, number>, Date>');
+verify.quickInfoAt("22", "var r7b: Collection<number, string>");
 
-goTo.marker('21');
-verify.quickInfoIs('var r7a: Collection<number, string>');
-
-goTo.marker('22');
-verify.quickInfoIs('var r7b: Collection<number, string>');
-
-goTo.marker('23');
-verify.quickInfoIs('var r8a: Collection<number, string>');
+verify.quickInfoAt("23", "var r8a: Collection<number, string>");
 
 verify.errorExistsBetweenMarkers('error1', 'error2');
 verify.errorExistsBetweenMarkers('17error1', '17error2');

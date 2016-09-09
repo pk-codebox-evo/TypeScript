@@ -26,7 +26,5 @@
 ////    }
 ////}
 
-goTo.marker("param1");
-verify.quickInfoIs("(parameter) arg: A")
-goTo.marker("param2");
-verify.quickInfoIs("(parameter) arg: B")
+verify.quickInfoAt("param1", "(parameter) arg: A");
+verify.quickInfoAt("param2", "(parameter) arg: B");

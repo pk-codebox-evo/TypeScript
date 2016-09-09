@@ -19,14 +19,10 @@
 goTo.marker('1');
 verify.completionListContains("multiM", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
 
-goTo.marker('2');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
+verify.quickInfoAt("2", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
 
-goTo.marker('3');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
+verify.quickInfoAt("3", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
 
-goTo.marker('4');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
+verify.quickInfoAt("4", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
 
-goTo.marker('5');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");
+verify.quickInfoAt("5", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2");

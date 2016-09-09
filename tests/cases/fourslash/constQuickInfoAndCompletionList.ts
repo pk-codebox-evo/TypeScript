@@ -9,8 +9,7 @@
 ////    var z = /*6*/a;
 ////    /*7*/
 ////}
-goTo.marker('1');
-verify.quickInfoIs("const a: number");
+verify.quickInfoAt("1", "const a: number");
 
 goTo.marker('2');
 verify.completionListContains("a", "const a: number");
@@ -19,8 +18,7 @@ verify.quickInfoIs("const a: number");
 goTo.marker('3');
 verify.completionListContains("a", "const a: number");
 
-goTo.marker('4');
-verify.quickInfoIs("const b: number");
+verify.quickInfoAt("4", "const b: number");
 
 goTo.marker('5');
 verify.completionListContains("a", "const a: number");

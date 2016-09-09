@@ -106,56 +106,35 @@
 ////  */
 ////function /*l*/l(param1: string) { /*9*/param1 = "hello"; }
 
-goTo.marker('a');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n\nThis is fourth Line");
+verify.quickInfoAt("a", undefined, "This is firstLine\nThis is second Line\n\nThis is fourth Line");
 
-goTo.marker('b');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n\nThis is fourth Line");
+verify.quickInfoAt("b", undefined, "This is firstLine\nThis is second Line\n\nThis is fourth Line");
 
-goTo.marker('c');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n\nThis is fourth Line");
+verify.quickInfoAt("c", undefined, "This is firstLine\nThis is second Line\n\nThis is fourth Line");
 
-goTo.marker('d');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
-goTo.marker('1');
-verify.quickInfoIs(undefined, "");
+verify.quickInfoAt("d", undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
+verify.quickInfoAt("1", undefined, "");
 
-goTo.marker('e');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line");
-goTo.marker('2');
-verify.quickInfoIs(undefined, "");
+verify.quickInfoAt("e", undefined, "This is firstLine\nThis is second Line");
+verify.quickInfoAt("2", undefined, "");
 
-goTo.marker('f');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
-goTo.marker('3');
-verify.quickInfoIs(undefined, "first line of param\n\nparam information third line");
+verify.quickInfoAt("f", undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
+verify.quickInfoAt("3", undefined, "first line of param\n\nparam information third line");
 
-goTo.marker('g');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
-goTo.marker('4');
-verify.quickInfoIs(undefined, "param information first line");
+verify.quickInfoAt("g", undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
+verify.quickInfoAt("4", undefined, "param information first line");
 
-goTo.marker('h');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
-goTo.marker('5');
-verify.quickInfoIs(undefined, "param information first line\n\nparam information third line");
+verify.quickInfoAt("h", undefined, "This is firstLine\nThis is second Line\n@random tag This should be third line");
+verify.quickInfoAt("5", undefined, "param information first line\n\nparam information third line");
 
-goTo.marker('i');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line");
-goTo.marker('6');
-verify.quickInfoIs(undefined, "param information first line\n\nparam information third line");
+verify.quickInfoAt("i", undefined, "This is firstLine\nThis is second Line");
+verify.quickInfoAt("6", undefined, "param information first line\n\nparam information third line");
 
-goTo.marker('j');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line");
-goTo.marker('7');
-verify.quickInfoIs(undefined, "param information first line\n\nparam information third line");
+verify.quickInfoAt("j", undefined, "This is firstLine\nThis is second Line");
+verify.quickInfoAt("7", undefined, "param information first line\n\nparam information third line");
 
-goTo.marker('k');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line\n@randomtag \n\n random information first line\n\n random information third line");
-goTo.marker('8');
-verify.quickInfoIs(undefined, "hello   ");
+verify.quickInfoAt("k", undefined, "This is firstLine\nThis is second Line\n@randomtag \n\n random information first line\n\n random information third line");
+verify.quickInfoAt("8", undefined, "hello   ");
 
-goTo.marker('l');
-verify.quickInfoIs(undefined, "This is firstLine\nThis is second Line");
-goTo.marker('9');
-verify.quickInfoIs(undefined, "first Line text\nblank line that shouldnt be shown when starting this \nsecond time information about the param again");
+verify.quickInfoAt("l", undefined, "This is firstLine\nThis is second Line");
+verify.quickInfoAt("9", undefined, "first Line text\nblank line that shouldnt be shown when starting this \nsecond time information about the param again");

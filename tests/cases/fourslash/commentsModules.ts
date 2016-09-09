@@ -96,8 +96,7 @@
 ////}
 ////var myComp/*35*/lexVal = new compl/*36*/exM.m/*37*/2./*38*/c().f/*39*/oo2().f/*40*/oo();
 
-goTo.marker('1');
-verify.quickInfoIs("namespace m1", "Namespace comment");
+verify.quickInfoAt("1", "namespace m1", "Namespace comment");
 
 goTo.marker('2');
 verify.completionListContains("b", "var m1.b: number", "b's comment");
@@ -105,8 +104,7 @@ verify.completionListContains("foo", "function foo(): number", "foo's comment");
 
 goTo.marker('3');
 verify.currentSignatureHelpDocCommentIs("foo's comment");
-goTo.marker('3q');
-verify.quickInfoIs("function foo(): number", "foo's comment");
+verify.quickInfoAt("3q", "function foo(): number", "foo's comment");
 
 goTo.marker('4');
 verify.completionListContains("m1", "namespace m1", "Namespace comment");
@@ -120,8 +118,7 @@ verify.quickInfoIs("function m1.fooExport(): number", "exported function");
 goTo.marker('6');
 verify.currentSignatureHelpDocCommentIs("exported function");
 
-goTo.marker('7');
-verify.quickInfoIs("var myvar: m1.m2.c", "");
+verify.quickInfoAt("7", "var myvar: m1.m2.c", "");
 
 goTo.marker('8');
 verify.quickInfoIs("constructor m1.m2.c(): m1.m2.c", "");
@@ -232,20 +229,14 @@ goTo.marker('34');
 verify.completionListContains("c", 'class c', "");
 verify.quickInfoIs('class c', "");
 
-goTo.marker('35');
-verify.quickInfoIs("var myComplexVal: number", "");
+verify.quickInfoAt("35", "var myComplexVal: number", "");
 
-goTo.marker('36');
-verify.quickInfoIs("namespace complexM", "");
+verify.quickInfoAt("36", "namespace complexM", "");
 
-goTo.marker('37');
-verify.quickInfoIs("namespace complexM.m2", "");
+verify.quickInfoAt("37", "namespace complexM.m2", "");
 
-goTo.marker('38');
-verify.quickInfoIs("constructor complexM.m2.c(): complexM.m2.c", "");
+verify.quickInfoAt("38", "constructor complexM.m2.c(): complexM.m2.c", "");
 
-goTo.marker('39');
-verify.quickInfoIs("(method) complexM.m2.c.foo2(): complexM.m1.c", "");
+verify.quickInfoAt("39", "(method) complexM.m2.c.foo2(): complexM.m1.c", "");
 
-goTo.marker('40');
-verify.quickInfoIs("(method) complexM.m1.c.foo(): number", "");
+verify.quickInfoAt("40", "(method) complexM.m1.c.foo(): number", "");

@@ -29,27 +29,16 @@
 
 // the above code should have a couple errors that will need to be updated with appropriate new (non-error) code and quick info checks
 verify.not.errorExistsBetweenMarkers('1', '6');
-
-goTo.marker('1');
-verify.quickInfoIs('var x: any[]');
-
-goTo.marker('2');
-verify.quickInfoIs('var r: C');
-
-goTo.marker('3');
-verify.quickInfoIs('var r3: C');
-
-goTo.marker('4');
-verify.quickInfoIs('var r4: C');
-
-goTo.marker('5');
-verify.quickInfoIs('var x5: {\n\
+verify.quickInfoAt("1", "var x: any[]");
+verify.quickInfoAt("2", "var r: C");
+verify.quickInfoAt("3", "var r3: C");
+verify.quickInfoAt("4", "var r4: C");
+verify.quickInfoAt("5", "var x5: {\n\
     name: string;\n\
     age: number;\n\
-}[]');
+}[]");
 
-goTo.marker('6');
-verify.quickInfoIs('var r5: {\n\
+verify.quickInfoAt("6", "var r5: {\n\
     name: string;\n\
     age: number;\n\
-}');
+}");

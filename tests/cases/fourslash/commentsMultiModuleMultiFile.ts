@@ -29,23 +29,17 @@
 goTo.marker('1');
 verify.completionListContains("multiM", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
-goTo.marker('2');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
+verify.quickInfoAt("2", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
-goTo.marker('3');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
+verify.quickInfoAt("3", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
-goTo.marker('4');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
+verify.quickInfoAt("4", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
-goTo.marker('5');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
+verify.quickInfoAt("5", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
-goTo.marker('6');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
+verify.quickInfoAt("6", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
 goTo.marker('7');
 verify.completionListContains("multiM", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
 
-goTo.marker('8');
-verify.quickInfoIs("namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");
+verify.quickInfoAt("8", "namespace multiM", "this is multi declare namespace\nthi is multi namespace 2\nthis is multi namespace 3 comment");

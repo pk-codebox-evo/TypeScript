@@ -12,7 +12,5 @@
 ////    }
 ////}
 
-goTo.marker('1');
-verify.quickInfoIs('(parameter) xy: string');
-goTo.marker('2');
-verify.quickInfoIs('(parameter) options: FooOptions');
+verify.quickInfoAt("1", "(parameter) xy: string");
+verify.quickInfoAt("2", "(parameter) options: FooOptions");

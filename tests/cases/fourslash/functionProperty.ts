@@ -39,11 +39,6 @@ verify.completionListContains("x", "(property) x: (a: number) => void");
 goTo.marker('completionC');
 verify.completionListContains("x", "(property) x: (a: number) => void");
 
-goTo.marker('quickInfoA');
-verify.quickInfoIs("(method) x(a: number): void", undefined);
-
-goTo.marker('quickInfoB');
-verify.quickInfoIs("(property) x: (a: number) => void", undefined);
-
-goTo.marker('quickInfoC');
-verify.quickInfoIs("(property) x: (a: number) => void", undefined);
+verify.quickInfoAt("quickInfoA", "(method) x(a: number): void", undefined);
+verify.quickInfoAt("quickInfoB", "(property) x: (a: number) => void", undefined);
+verify.quickInfoAt("quickInfoC", "(property) x: (a: number) => void", undefined);
