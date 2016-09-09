@@ -137,7 +137,9 @@ declare namespace FourSlashInterface {
     }
     class verify extends verifyNegatable {
         //move
-        quickInquickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string): void;
+        quickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string): void;
+        quickInfos(namesAndTexts: { [name: string]: string }): void;
+
         assertHasRanges(ranges: Range[]): void;
         caretAtMarker(markerName?: string): void;
         indentationIs(numberOfSpaces: number): void;

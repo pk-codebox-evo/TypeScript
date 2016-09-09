@@ -65,32 +65,34 @@
 
 verify.numberOfErrorsInCurrentFile(0);
 
-verify.quickInfoAt("a1", "var f_r4: Foo<any>");
-verify.quickInfoAt("a2", "var f_r7: Foo<Foo<number>>");
-verify.quickInfoAt("a3", "var f_r9: IG<any>");
-verify.quickInfoAt("a5", "var f_r13: {\n    x: Foo<any>;\n}");
-verify.quickInfoAt("a7", "var f_r17: C<any>");
+verify.quickInfos({
+    a1: "var f_r4: Foo<any>",
+    a2: "var f_r7: Foo<Foo<number>>",
+    a3: "var f_r9: IG<any>",
+    a5: "var f_r13: {\n    x: Foo<any>;\n}",
+    a7: "var f_r17: C<any>",
 
-verify.quickInfoAt("b1", "var f2_r4: Foo<number>");
-verify.quickInfoAt("b2", "var f2_r7: Foo<Foo<number>>"); 
-verify.quickInfoAt("b3", "var f2_r9: IG<number>");
-verify.quickInfoAt("b5", "var f2_r13: {\n    x: Foo<number>;\n}");
-verify.quickInfoAt("b7", "var f2_r17: C<number>");
+    b1: "var f2_r4: Foo<number>",
+    b2: "var f2_r7: Foo<Foo<number>>",
+    b3: "var f2_r9: IG<number>",
+    b5: "var f2_r13: {\n    x: Foo<number>;\n}",
+    b7: "var f2_r17: C<number>",
 
-verify.quickInfoAt("c1", "var f3_r4: Foo<I>");
-verify.quickInfoAt("c2", "var f3_r7: Foo<Foo<number>>");
-verify.quickInfoAt("c3", "var f3_r9: IG<I>");
-verify.quickInfoAt("c5", "var f3_r13: {\n    x: Foo<I>;\n}");
-verify.quickInfoAt("c7", "var f3_r17: C<I>");
+    c1: "var f3_r4: Foo<I>",
+    c2: "var f3_r7: Foo<Foo<number>>",
+    c3: "var f3_r9: IG<I>",
+    c5: "var f3_r13: {\n    x: Foo<I>;\n}",
+    c7: "var f3_r17: C<I>",
 
-verify.quickInfoAt("d1", "var f4_r4: Foo<{\n    x: number;\n}>");
-verify.quickInfoAt("d2", "var f4_r7: Foo<Foo<number>>");
-verify.quickInfoAt("d3", "var f4_r9: IG<{\n    x: number;\n}>");
-verify.quickInfoAt("d5", "var f4_r13: {\n    x: Foo<{\n        x: number;\n    }>;\n}");
-verify.quickInfoAt("d7", "var f4_r17: C<{\n    x: number;\n}>");
+    d1: "var f4_r4: Foo<{\n    x: number;\n}>",
+    d2: "var f4_r7: Foo<Foo<number>>",
+    d3: "var f4_r9: IG<{\n    x: number;\n}>",
+    d5: "var f4_r13: {\n    x: Foo<{\n        x: number;\n    }>;\n}",
+    d7: "var f4_r17: C<{\n    x: number;\n}>",
 
-verify.quickInfoAt("e1", "var f5_r4: Foo<Foo<number>>");
-verify.quickInfoAt("e2", "var f5_r7: Foo<Foo<number>>");
-verify.quickInfoAt("e3", "var f5_r9: IG<Foo<number>>");
-verify.quickInfoAt("e5", "var f5_r13: {\n    x: Foo<Foo<number>>;\n}");
-verify.quickInfoAt("e7", "var f5_r17: C<Foo<number>>");
+    e1: "var f5_r4: Foo<Foo<number>>",
+    e2: "var f5_r7: Foo<Foo<number>>",
+    e3: "var f5_r9: IG<Foo<number>>",
+    e5: "var f5_r13: {\n    x: Foo<Foo<number>>;\n}",
+    e7: "var f5_r17: C<Foo<number>>",
+});
