@@ -56,7 +56,7 @@ namespace ts {
         tryScan<T>(callback: () => T): T;
     }
 
-    const textToToken = createMap({
+    const textToToken = createMapFromTemplate({
         "abstract": SyntaxKind.AbstractKeyword,
         "any": SyntaxKind.AnyKeyword,
         "as": SyntaxKind.AsKeyword,
@@ -90,6 +90,7 @@ namespace ts {
         "instanceof": SyntaxKind.InstanceOfKeyword,
         "interface": SyntaxKind.InterfaceKeyword,
         "is": SyntaxKind.IsKeyword,
+        "keyof": SyntaxKind.KeyOfKeyword,
         "let": SyntaxKind.LetKeyword,
         "module": SyntaxKind.ModuleKeyword,
         "namespace": SyntaxKind.NamespaceKeyword,
@@ -97,6 +98,7 @@ namespace ts {
         "new": SyntaxKind.NewKeyword,
         "null": SyntaxKind.NullKeyword,
         "number": SyntaxKind.NumberKeyword,
+        "object": SyntaxKind.ObjectKeyword,
         "package": SyntaxKind.PackageKeyword,
         "private": SyntaxKind.PrivateKeyword,
         "protected": SyntaxKind.ProtectedKeyword,
@@ -274,9 +276,9 @@ namespace ts {
 
     function makeReverseMap(source: Map<number>): string[] {
         const result: string[] = [];
-        for (const name in source) {
-            result[source[name]] = name;
-        }
+        source.forEach((value, name) => {
+            result[value] = name;
+        });
         return result;
     }
 
@@ -288,7 +290,7 @@ namespace ts {
 
     /* @internal */
     export function stringToToken(s: string): SyntaxKind {
-        return textToToken[s];
+        return textToToken.get(s);
     }
 
     /* @internal */
@@ -361,8 +363,6 @@ namespace ts {
     export function getLineAndCharacterOfPosition(sourceFile: SourceFile, position: number): LineAndCharacter {
         return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);
     }
-
-    const hasOwnProperty = Object.prototype.hasOwnProperty;
 
     export function isWhiteSpace(ch: number): boolean {
         return isWhiteSpaceSingleLine(ch) || isLineBreak(ch);
@@ -530,7 +530,7 @@ namespace ts {
             const ch = text.charCodeAt(pos);
 
             if ((pos + mergeConflictMarkerLength) < text.length) {
-                for (let i = 0, n = mergeConflictMarkerLength; i < n; i++) {
+                for (let i = 0; i < mergeConflictMarkerLength; i++) {
                     if (text.charCodeAt(pos + i) !== ch) {
                         return false;
                     }
@@ -642,7 +642,7 @@ namespace ts {
                     pos++;
                     continue;
                 case CharacterCodes.slash:
-                    let nextChar = text.charCodeAt(pos + 1);
+                    const nextChar = text.charCodeAt(pos + 1);
                     let hasTrailingNewLine = false;
                     if (nextChar === CharacterCodes.slash || nextChar === CharacterCodes.asterisk) {
                         const kind = nextChar === CharacterCodes.slash ? SyntaxKind.SingleLineCommentTrivia : SyntaxKind.MultiLineCommentTrivia;
@@ -723,7 +723,7 @@ namespace ts {
         return iterateCommentRanges(/*reduce*/ true, text, pos, /*trailing*/ true, cb, state, initial);
     }
 
-    function appendCommentRange(pos: number, end: number, kind: SyntaxKind, hasTrailingNewLine: boolean, state: any, comments: CommentRange[]) {
+    function appendCommentRange(pos: number, end: number, kind: SyntaxKind, hasTrailingNewLine: boolean, _state: any, comments: CommentRange[]) {
         if (!comments) {
             comments = [];
         }
@@ -732,11 +732,11 @@ namespace ts {
         return comments;
     }
 
-    export function getLeadingCommentRanges(text: string, pos: number): CommentRange[] {
+    export function getLeadingCommentRanges(text: string, pos: number): CommentRange[] | undefined {
         return reduceEachLeadingCommentRange(text, pos, appendCommentRange, undefined, undefined);
     }
 
-    export function getTrailingCommentRanges(text: string, pos: number): CommentRange[] {
+    export function getTrailingCommentRanges(text: string, pos: number): CommentRange[] | undefined {
         return reduceEachTrailingCommentRange(text, pos, appendCommentRange, undefined, undefined);
     }
 
@@ -765,7 +765,7 @@ namespace ts {
             return false;
         }
 
-        for (let i = 1, n = name.length; i < n; i++) {
+        for (let i = 1; i < name.length; i++) {
             if (!isIdentifierPart(name.charCodeAt(i), languageVersion)) {
                 return false;
             }
@@ -1182,15 +1182,18 @@ namespace ts {
             const len = tokenValue.length;
             if (len >= 2 && len <= 11) {
                 const ch = tokenValue.charCodeAt(0);
-                if (ch >= CharacterCodes.a && ch <= CharacterCodes.z && hasOwnProperty.call(textToToken, tokenValue)) {
-                    return token = textToToken[tokenValue];
+                if (ch >= CharacterCodes.a && ch <= CharacterCodes.z) {
+                    token = textToToken.get(tokenValue);
+                    if (token !== undefined) {
+                        return token;
+                    }
                 }
             }
             return token = SyntaxKind.Identifier;
         }
 
         function scanBinaryOrOctalDigits(base: number): number {
-            Debug.assert(base !== 2 || base !== 8, "Expected either base 2 or base 8");
+            Debug.assert(base === 2 || base === 8, "Expected either base 2 or base 8");
 
             let value = 0;
             // For counting number of digits; Valid binaryIntegerLiteral must have at least one binary digit following B or b.
@@ -1562,7 +1565,7 @@ namespace ts {
                         pos++;
                         return token = SyntaxKind.AtToken;
                     case CharacterCodes.backslash:
-                        let cookedChar = peekUnicodeEscape();
+                        const cookedChar = peekUnicodeEscape();
                         if (cookedChar >= 0 && isIdentifierStart(cookedChar, languageVersion)) {
                             pos += 6;
                             tokenValue = String.fromCharCode(cookedChar) + scanIdentifierParts();
@@ -1759,40 +1762,49 @@ namespace ts {
             }
 
             startPos = pos;
-
-            // Eat leading whitespace
-            let ch = text.charCodeAt(pos);
-            while (pos < end) {
-                ch = text.charCodeAt(pos);
-                if (isWhiteSpaceSingleLine(ch)) {
-                    pos++;
-                }
-                else {
-                    break;
-                }
-            }
             tokenPos = pos;
 
+            const ch = text.charCodeAt(pos);
             switch (ch) {
+                case CharacterCodes.tab:
+                case CharacterCodes.verticalTab:
+                case CharacterCodes.formFeed:
+                case CharacterCodes.space:
+                    while (pos < end && isWhiteSpaceSingleLine(text.charCodeAt(pos))) {
+                        pos++;
+                    }
+                    return token = SyntaxKind.WhitespaceTrivia;
                 case CharacterCodes.at:
-                    return pos += 1, token = SyntaxKind.AtToken;
+                    pos++;
+                    return token = SyntaxKind.AtToken;
                 case CharacterCodes.lineFeed:
                 case CharacterCodes.carriageReturn:
-                    return pos += 1, token = SyntaxKind.NewLineTrivia;
+                    pos++;
+                    return token = SyntaxKind.NewLineTrivia;
                 case CharacterCodes.asterisk:
-                    return pos += 1, token = SyntaxKind.AsteriskToken;
+                    pos++;
+                    return token = SyntaxKind.AsteriskToken;
                 case CharacterCodes.openBrace:
-                    return pos += 1, token = SyntaxKind.OpenBraceToken;
+                    pos++;
+                    return token = SyntaxKind.OpenBraceToken;
                 case CharacterCodes.closeBrace:
-                    return pos += 1, token = SyntaxKind.CloseBraceToken;
+                    pos++;
+                    return token = SyntaxKind.CloseBraceToken;
                 case CharacterCodes.openBracket:
-                    return pos += 1, token = SyntaxKind.OpenBracketToken;
+                    pos++;
+                    return token = SyntaxKind.OpenBracketToken;
                 case CharacterCodes.closeBracket:
-                    return pos += 1, token = SyntaxKind.CloseBracketToken;
+                    pos++;
+                    return token = SyntaxKind.CloseBracketToken;
                 case CharacterCodes.equals:
-                    return pos += 1, token = SyntaxKind.EqualsToken;
+                    pos++;
+                    return token = SyntaxKind.EqualsToken;
                 case CharacterCodes.comma:
-                    return pos += 1, token = SyntaxKind.CommaToken;
+                    pos++;
+                    return token = SyntaxKind.CommaToken;
+                case CharacterCodes.dot:
+                    pos++;
+                    return token = SyntaxKind.DotToken;
             }
 
             if (isIdentifierStart(ch, ScriptTarget.Latest)) {

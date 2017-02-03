@@ -1,13 +1,8 @@
 {
+    "extends": "../tsconfig-base",
     "compilerOptions": {
-        "noImplicitAny": true,
-        "noImplicitThis": true,
         "removeComments": true,
-        "preserveConstEnums": true,
-        "pretty": true,
-        "out": "../../built/local/tsserver.js",
-        "sourceMap": true,
-        "stripInternal": true,
+        "outFile": "../../built/local/tsserver.js",
         "types": [
             "node"
         ]
@@ -15,8 +10,15 @@
     "files": [
         "../services/shims.ts",
         "../services/utilities.ts",
+        "shared.ts",
+        "utilities.ts",
+        "scriptVersionCache.ts",
+        "scriptInfo.ts",
+        "lsHost.ts",
+        "typingsCache.ts",
+        "project.ts",
         "editorServices.ts",
-        "protocol.d.ts",
+        "protocol.ts",
         "session.ts",
         "server.ts"
     ]

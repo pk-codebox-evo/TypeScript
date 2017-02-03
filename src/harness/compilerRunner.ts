@@ -136,9 +136,7 @@ class CompilerBaselineRunner extends RunnerBase {
 
             // check errors
             it("Correct errors for " + fileName, () => {
-                if (this.errors) {
-                    Harness.Compiler.doErrorBaseline(justName, toBeCompiled.concat(otherFiles), result.errors);
-                }
+                 Harness.Compiler.doErrorBaseline(justName, toBeCompiled.concat(otherFiles), result.errors);
             });
 
             it (`Correct module resolution tracing for ${fileName}`, () => {
@@ -172,7 +170,7 @@ class CompilerBaselineRunner extends RunnerBase {
             });
 
             it("Correct Sourcemap output for " + fileName, () => {
-                Harness.Compiler.doSourcemapBaseline(justName, options, result);
+                Harness.Compiler.doSourcemapBaseline(justName, options, result, harnessSettings);
             });
 
             it("Correct type/symbol baselines for " + fileName, () => {

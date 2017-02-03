@@ -1,4 +1,4 @@
-namespace ts {
+﻿namespace ts {
     export interface TranspileOptions {
         compilerOptions?: CompilerOptions;
         fileName?: string;
@@ -63,7 +63,7 @@ namespace ts {
         }
 
         if (transpileOptions.renamedDependencies) {
-            sourceFile.renamedDependencies = createMap(transpileOptions.renamedDependencies);
+            sourceFile.renamedDependencies = createMapFromTemplate(transpileOptions.renamedDependencies);
         }
 
         const newLine = getNewLineCharacter(options);
@@ -74,8 +74,8 @@ namespace ts {
 
         // Create a compilerHost object to allow the compiler to read and write files
         const compilerHost: CompilerHost = {
-            getSourceFile: (fileName, target) => fileName === normalizePath(inputFileName) ? sourceFile : undefined,
-            writeFile: (name, text, writeByteOrderMark) => {
+            getSourceFile: (fileName) => fileName === normalizePath(inputFileName) ? sourceFile : undefined,
+            writeFile: (name, text) => {
                 if (fileExtensionIs(name, ".map")) {
                     Debug.assert(sourceMapText === undefined, `Unexpected multiple source map outputs for the file '${name}'`);
                     sourceMapText = text;
@@ -91,9 +91,9 @@ namespace ts {
             getCurrentDirectory: () => "",
             getNewLine: () => newLine,
             fileExists: (fileName): boolean => fileName === inputFileName,
-            readFile: (fileName): string => "",
-            directoryExists: directoryExists => true,
-            getDirectories: (path: string) => []
+            readFile: () => "",
+            directoryExists: () => true,
+            getDirectories: () => []
         };
 
         const program = createProgram([inputFileName], options, compilerHost);
@@ -126,7 +126,7 @@ namespace ts {
     function fixupCompilerOptions(options: CompilerOptions, diagnostics: Diagnostic[]): CompilerOptions {
         // Lazily create this value to fix module loading errors.
         commandLineOptionsStringToEnum = commandLineOptionsStringToEnum || <CommandLineOptionOfCustomType[]>filter(optionDeclarations, o =>
-            typeof o.type === "object" && !forEachProperty(o.type, v => typeof v !== "number"));
+            typeof o.type === "object" && !forEachEntry(o.type, v => typeof v !== "number"));
 
         options = clone(options);
 
@@ -142,7 +142,7 @@ namespace ts {
                 options[opt.name] = parseCustomTypeOption(opt, value, diagnostics);
             }
             else {
-                if (!forEachProperty(opt.type, v => v === value)) {
+                if (!forEachEntry(opt.type, v => v === value)) {
                     // Supplied value isn't a valid enum value.
                     diagnostics.push(createCompilerDiagnosticForInvalidCustomType(opt));
                 }

@@ -237,7 +237,7 @@ namespace ts.SignatureHelp {
         const typeChecker = program.getTypeChecker();
         for (const sourceFile of program.getSourceFiles()) {
             const nameToDeclarations = sourceFile.getNamedDeclarations();
-            const declarations = nameToDeclarations[name.text];
+            const declarations = nameToDeclarations.get(name.text);
 
             if (declarations) {
                 for (const declaration of declarations) {
@@ -260,7 +260,7 @@ namespace ts.SignatureHelp {
      * Returns relevant information for the argument list and the current argument if we are
      * in the argument of an invocation; returns undefined otherwise.
      */
-    function getImmediatelyContainingArgumentInfo(node: Node, position: number, sourceFile: SourceFile): ArgumentListInfo {
+    export function getImmediatelyContainingArgumentInfo(node: Node, position: number, sourceFile: SourceFile): ArgumentListInfo {
         if (node.parent.kind === SyntaxKind.CallExpression || node.parent.kind === SyntaxKind.NewExpression) {
             const callExpression = <CallExpression>node.parent;
             // There are 3 cases to handle:
@@ -557,7 +557,9 @@ namespace ts.SignatureHelp {
                 addRange(prefixDisplayParts, callTargetDisplayParts);
             }
 
+            let isVariadic: boolean;
             if (isTypeParameterList) {
+                isVariadic = false; // type parameter lists are not variadic
                 prefixDisplayParts.push(punctuationPart(SyntaxKind.LessThanToken));
                 const typeParameters = candidateSignature.typeParameters;
                 signatureHelpParameters = typeParameters && typeParameters.length > 0 ? map(typeParameters, createSignatureHelpParameterForTypeParameter) : emptyArray;
@@ -567,6 +569,7 @@ namespace ts.SignatureHelp {
                 addRange(suffixDisplayParts, parameterParts);
             }
             else {
+                isVariadic = candidateSignature.hasRestParameter;
                 const typeParameterParts = mapToDisplayParts(writer =>
                     typeChecker.getSymbolDisplayBuilder().buildDisplayForTypeParametersAndDelimiters(candidateSignature.typeParameters, writer, invocation));
                 addRange(prefixDisplayParts, typeParameterParts);
@@ -582,7 +585,7 @@ namespace ts.SignatureHelp {
             addRange(suffixDisplayParts, returnTypeParts);
 
             return {
-                isVariadic: candidateSignature.hasRestParameter,
+                isVariadic,
                 prefixDisplayParts,
                 suffixDisplayParts,
                 separatorDisplayParts: [punctuationPart(SyntaxKind.CommaToken), spacePart()],

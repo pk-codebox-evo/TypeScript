@@ -34,6 +34,7 @@ var C = (function () {
     C.prototype.method = function () { };
     return C;
 }());
+export { C };
 C.s = 0;
 export { C as C2 };
 var D = (function () {
